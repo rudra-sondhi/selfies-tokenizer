@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "selfies-tokenizer"
+version = "0.1.0"
+description = "Super fast tokenizer for SELFIES molecular representations with ML-ready batch processing"
+readme = "README.md"
+authors = [
+    {name = "Rudra Sondhi", email = "rudra.sondhi2@gmail.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+keywords = ["selfies", "tokenizer", "chemistry", "molecular", "machine-learning", "cheminformatics"]
+requires-python = ">=3.7"
+dependencies = [
+    "numpy>=1.19.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "tqdm>=4.62.0",
+    "selfies>=2.0.0",
+]
+all = [
+    "tqdm>=4.62.0",
+    "selfies>=2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/selfies-tokenizer"
+Documentation = "https://github.com/yourusername/selfies-tokenizer#readme"
+Repository = "https://github.com/yourusername/selfies-tokenizer"
+Issues = "https://github.com/yourusername/selfies-tokenizer/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["selfies_tokenizer*"]
+exclude = ["examples*", "tests*"]
+
+[tool.setuptools.package-data]
+selfies_tokenizer = ["py.typed"]
