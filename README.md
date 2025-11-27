@@ -23,9 +23,8 @@ A **super fast** tokenizer for SELFIES (SELF-referencIng Embedded Strings) molec
 ## Installation
 
 ```bash
-pip install selfies-tokenizer  # Coming soon to PyPI
+pip install selfies-tokenizer  
 ```
-
 
 
 ## Quick Start
@@ -50,7 +49,7 @@ tokenizer = SELFIESTokenizer(
     vocab_path='./vocab.json',
     refresh_dict=True
 )
-train_data = ['[C][=O][OH]', '[N][C][C]', '[C][Branch1][C][O]']
+train_data = ['[C][=O][O]', '[N][C][C]', '[C][Branch1][C][O]']
 tokenizer.fit(train_data, show_progress=True)  # Progress bar for large datasets
 tokenizer.save_vocab()  # Saves max_len and vocab_len in metadata
 
@@ -63,7 +62,7 @@ indices = tokenizer.encode('[C][=O]')
 # Format: <start>, [C], [=O], <end>, <pad>... (length 15)
 
 # 3. Batch processing with uniform length
-batch_indices = tokenizer.encode(['[C][=O]', '[N]', '[C][OH]'], show_progress=True)
+batch_indices = tokenizer.encode(['[C][=O]', '[N]', '[C][O]'], show_progress=True)
 # All sequences have same length (15 from metadata)
 
 # 4. Load existing vocabulary for inference (max_len auto-loaded)
@@ -76,7 +75,7 @@ decoded = inference_tokenizer.decode([2, 6, 5, 1, 0, 0, 0])
 
 # 6. Batch decode
 decoded_batch = inference_tokenizer.decode(batch_indices)
-# Returns: ['[C][=O]', '[N]', '[C][OH]'] (all clean)
+# Returns: ['[C][=O]', '[N]', '[C][O]'] (all clean)
 ```
 
 ### Smart max_len Selection with `suggest_len()`
@@ -165,6 +164,8 @@ paths = save_encoded_dataset(
 
 # Later, load everything back
 dataset = load_encoded_dataset('./datasets/my_dataset')
+# Note: load_map=False by default (faster, less memory)
+# Use load_map=True if you need the index_mapping
 
 # Ready for ML!
 X = dataset['encoded_data']        # numpy array
@@ -237,7 +238,7 @@ tokenizer = SELFIESTokenizer(
 Build vocabulary from SELFIES data.
 
 ```python
-tokenizer.fit(['[C][=O]', '[N][C]', '[C][OH]'])
+tokenizer.fit(['[C][=O]', '[N][C]', '[C][O]'])
 # Builds vocabulary from training data
 
 # With progress bar for large datasets
@@ -486,14 +487,15 @@ from selfies_tokenizer import load_encoded_dataset
 
 dataset = load_encoded_dataset(
     load_dir='./datasets/my_data',
-    load_tokenizer=True
+    load_tokenizer=True,
+    load_map=False  # Set to True if you need index mapping
 )
 
 # Access components
 X = dataset['encoded_data']        # numpy array
 tokenizer = dataset['tokenizer']   # SELFIESTokenizer
 metadata = dataset['metadata']     # dict with all info
-index_mapping = dataset['index_mapping']  # index -> SELFIES
+index_mapping = dataset['index_mapping']  # None by default, dict if load_map=True
 ```
 
 **Parameters:**
@@ -502,13 +504,16 @@ index_mapping = dataset['index_mapping']  # index -> SELFIES
 - `data_filename`: `str` - Data filename (default: 'encoded_data.npy')
 - `index_filename`: `str` - Index mapping filename (default: 'index_mapping.json')
 - `metadata_filename`: `str` - Metadata filename (default: 'metadata.json')
-- `load_tokenizer`: `bool` - If True, load and return tokenizer instance
+- `load_tokenizer`: `bool` - If True, load and return tokenizer instance (default: True)
+- `load_map`: `bool` - If True, load and return index mapping (default: False)
 
 **Returns:** `dict` containing:
 - `encoded_data`: `np.ndarray` - Encoded sequences
-- `index_mapping`: `dict` - Maps array index to SELFIES string
+- `index_mapping`: `dict` or `None` - Maps array index to SELFIES string (only if `load_map=True`)
 - `metadata`: `dict` - Full metadata (timestamp, settings, statistics)
 - `tokenizer`: `SELFIESTokenizer` or `None` - Tokenizer instance (if `load_tokenizer=True`)
+
+**Performance tip:** Keep `load_map=False` (default) for faster loading and lower memory usage when you don't need the index mapping.
 
 ## Padding and Truncation
 
@@ -601,7 +606,7 @@ from selfies_tokenizer import SELFIESTokenizer
 
 # Load your training data
 train_selfies = [
-    '[C][=O][OH]',
+    '[C][=O][O]',
     '[N][C][C][C]',
     '[C][Branch1][C][O][C]',
     # ... more training data
@@ -690,26 +695,6 @@ unk_idx = tokenizer.token2idx['<unk>']
 # result will contain unk_idx for [S]
 ```
 
-## Running Tests
-
-```bash
-# Run basic tests
-python test_tokenizer.py
-
-# Run ML functionality tests
-python test_tokenizer_ml.py
-
-# Run padding and truncation tests
-python test_padding.py
-
-# Run performance benchmarks
-python benchmark.py
-
-# Run examples
-python example.py          # Basic usage
-python example_ml.py       # ML workflow
-python example_padding.py  # Padding and truncation
-```
 
 ## How It Works
 
