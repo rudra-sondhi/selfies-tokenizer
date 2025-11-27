@@ -26,12 +26,7 @@ A **super fast** tokenizer for SELFIES (SELF-referencIng Embedded Strings) molec
 pip install selfies-tokenizer  # Coming soon to PyPI
 ```
 
-For now, install from source:
-```bash
-git clone <repo>
-cd selfies-tokenizer
-pip install -e .
-```
+
 
 ## Quick Start
 
