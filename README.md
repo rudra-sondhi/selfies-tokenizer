@@ -690,26 +690,6 @@ unk_idx = tokenizer.token2idx['<unk>']
 # result will contain unk_idx for [S]
 ```
 
-## Running Tests
-
-```bash
-# Run basic tests
-python test_tokenizer.py
-
-# Run ML functionality tests
-python test_tokenizer_ml.py
-
-# Run padding and truncation tests
-python test_padding.py
-
-# Run performance benchmarks
-python benchmark.py
-
-# Run examples
-python example.py          # Basic usage
-python example_ml.py       # ML workflow
-python example_padding.py  # Padding and truncation
-```
 
 ## How It Works
 
