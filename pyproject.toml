@@ -10,7 +10,8 @@ readme = "README.md"
 authors = [
     {name = "Rudra Sondhi", email = "rudra.sondhi2@gmail.com"}
 ]
-license = {text = "MIT"}
+license = "MIT"
+license-files = ["LICENSE"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
@@ -43,10 +44,10 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/selfies-tokenizer"
-Documentation = "https://github.com/yourusername/selfies-tokenizer#readme"
-Repository = "https://github.com/yourusername/selfies-tokenizer"
-Issues = "https://github.com/yourusername/selfies-tokenizer/issues"
+Homepage = "https://github.com/rudra-sondhi/selfies-tokenizer"
+Documentation = "https://github.com/rudra-sondhi/selfies-tokenizer#readme"
+Repository = "https://github.com/rudra-sondhi/selfies-tokenizer"
+
 
 [tool.setuptools.packages.find]
 where = ["."]
