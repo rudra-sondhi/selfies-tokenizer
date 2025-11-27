@@ -23,7 +23,7 @@ A **super fast** tokenizer for SELFIES (SELF-referencIng Embedded Strings) molec
 ## Installation
 
 ```bash
-pip install selfies-tokenizer  # Coming soon to PyPI
+pip install selfies-tokenizer
 ```
 
 
