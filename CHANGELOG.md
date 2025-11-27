@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2025-11-26
+
+### Added
+- `load_map` parameter to `load_encoded_dataset()` function
+  - When `False` (default), index_mapping is not loaded (faster, uses less memory)
+  - When `True`, index_mapping is loaded and returned
+  - Improves performance for large datasets where index mapping is not needed
+
+### Changed
+- `load_encoded_dataset()` now returns `index_mapping=None` by default
+- Index mapping file is only checked/loaded when `load_map=True`
+
 ## [0.1.0] - 2025-11-26
 
 ### Added
